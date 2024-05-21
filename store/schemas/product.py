@@ -1,5 +1,5 @@
 from pydantic import Field
-from store.core.schemas.base import BaseSchemaMixin
+from store.schemas.base import BaseSchemaMixin
 
 
 class ProductIn(BaseSchemaMixin):
