@@ -2,7 +2,7 @@ from uuid import UUID
 
 from pydantic import ValidationError
 import pytest
-from store.core.schemas.product import ProductIn
+from store.schemas.product import ProductIn
 from tests.factories import product_data
 
 
@@ -30,4 +30,3 @@ def test_schemas_return_raise():
         "input": {"name": "Processador Ryzen 5 5600G", "quantity": 20, "price": 1.0},
         "url": "https://errors.pydantic.dev/2.7/v/missing",
     }
-    # breakpoint()
