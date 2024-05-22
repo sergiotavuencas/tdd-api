@@ -1,9 +1,16 @@
 {
     "cSpell.words": [
+        "bson",
         "fastapi",
         "pydantic",
         "pymongo",
+        "usecase",
         "usecases",
         "usefixtures"
-    ]
+    ],
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
 }

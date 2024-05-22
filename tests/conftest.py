@@ -5,7 +5,8 @@ import pytest
 from store.db.mongo import db_client
 from store.schemas.product import ProductIn, ProductUpdate
 from tests.factories import product_data, products_data
-from store.usecases.product import product_usecases
+from store.usecases.product import product_usecase
+from httpx import AsyncClient
 
 
 @pytest.fixture(scope="session")
@@ -33,6 +34,19 @@ async def clear_collections(mongo_client):
 
 
 @pytest.fixture
+async def client() -> AsyncClient:
+    from store.main import app
+
+    async with AsyncClient(app=app, base_url="http://test") as ac:
+        yield ac
+
+
+@pytest.fixture
+def products_url() -> str:
+    return "/products/"
+
+
+@pytest.fixture
 def product_id() -> UUID:
     return UUID("fc5d1884-1c88-4402-9315-db80e813e5ff")
 
@@ -49,7 +63,7 @@ def product_up(product_id):
 
 @pytest.fixture
 async def product_inserted(product_in):
-    return await product_usecases.create(body=product_in)
+    return await product_usecase.create(body=product_in)
 
 
 @pytest.fixture
@@ -59,6 +73,4 @@ def products_in():
 
 @pytest.fixture
 async def products_inserted(products_in):
-    return [
-        await product_usecases.create(body=product_in) for product_in in products_in
-    ]
+    return [await product_usecase.create(body=product_in) for product_in in products_in]
