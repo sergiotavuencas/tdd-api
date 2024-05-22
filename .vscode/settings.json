@@ -4,6 +4,7 @@
         "fastapi",
         "pydantic",
         "pymongo",
+        "usecase",
         "usecases",
         "usefixtures"
     ],
