@@ -40,7 +40,7 @@ async def test_usecases_query_should_return_success():
 
 
 async def test_usecases_update_should_return_success(product_inserted, product_up):
-    product_up.price = 1.200
+    product_up.price = "1.100"
     result = await product_usecases.update(id=product_inserted.id, body=product_up)
 
     assert isinstance(result, ProductUpdateOut)
