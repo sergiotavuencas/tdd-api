@@ -17,6 +17,7 @@ def test_schemas_return_raise():
         "quantity": 20,
         "price": 1.000,
     }
+
     with pytest.raises(ValidationError) as err:
         ProductIn.model_validate(data)
 

@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List
 from uuid import UUID
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
@@ -38,6 +39,8 @@ class ProductUsecases:
             update={"$set": body.model_dump(exclude_none=True)},
             return_document=pymongo.ReturnDocument.AFTER,
         )
+
+        result["updated_at"] = datetime.utcnow()
 
         return ProductUpdateOut(**result)
 
