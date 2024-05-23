@@ -22,6 +22,20 @@ async def test_controller_create_should_return_success(client, products_url):
     }
 
 
+async def test_controller_create_should_return_unprocessable_entity(
+    client, products_url
+):
+    data = {
+        "name": "Processador Ryzen 5 5600G",
+        "quantity": 20,
+        "price": 1.000,
+    }
+    response = await client.post(products_url, json=data)
+    breakpoint()
+
+    assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
+
+
 async def test_controller_get_should_return_success(
     client, products_url, product_inserted
 ):

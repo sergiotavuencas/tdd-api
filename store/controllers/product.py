@@ -13,7 +13,13 @@ router = APIRouter(tags=["products"])
 async def post(
     body: ProductIn = Body(...), usecase: ProductUsecases = Depends()
 ) -> ProductOut:
-    return await usecase.create(body=body)
+    try:
+        return await usecase.create(body=body)
+
+    except NotFoundException as exec:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=exec.message
+        )
 
 
 @router.get(path="/{id}", status_code=status.HTTP_200_OK)
