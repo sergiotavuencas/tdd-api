@@ -31,7 +31,6 @@ async def test_controller_create_should_return_unprocessable_entity(
         "price": 1.000,
     }
     response = await client.post(products_url, json=data)
-    breakpoint()
 
     assert response.status_code == status.HTTP_422_UNPROCESSABLE_ENTITY
 
@@ -92,6 +91,15 @@ async def test_controller_patch_should_return_success(
         "price": "1.100",
         "status": True,
     }
+
+
+async def test_controller_patch_should_return_not_found(client, products_url):
+    response = await client.patch(
+        f"{products_url}d55dff79-54ff-4df6-8779-bf2f54daf6b1", json={"price": "1.100"}
+    )
+
+    assert response.status_code == status.HTTP_404_NOT_FOUND
+    assert response.content == b'{"detail":"Sorry, but we couldn\'t find the product"}'
 
 
 async def test_controller_delete_should_return_no_content(
