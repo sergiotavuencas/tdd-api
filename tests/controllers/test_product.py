@@ -1,7 +1,7 @@
 from typing import List
 
 import pytest
-from tests.factories import product_data
+from tests.factories import product_data, products_data
 from fastapi import status
 
 
@@ -20,6 +20,29 @@ async def test_controller_create_should_return_success(client, products_url):
         "price": "1.000",
         "status": True,
     }
+
+
+async def test_controller_create_many_with_price_filter_should_return_success(
+    client, products_url
+):
+    products = [
+        product
+        for product in products_data()
+        if product.get("price") >= "1.000" and product.get("price") < "1.700"
+    ]
+
+    responses = []
+
+    for product in products:
+        responses.append(await client.post(products_url, json=product))
+
+    for response in responses:
+        content = response.json()
+        del content["id"]
+        del content["created_at"]
+        del content["updated_at"]
+
+        assert response.status_code == status.HTTP_201_CREATED
 
 
 async def test_controller_create_should_return_unprocessable_entity(
